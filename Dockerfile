@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # install node 4.x
 RUN wget -qO- https://deb.nodesource.com/setup_4.x | bash - \
-	&& apt-get -y install nodejs
+	&& apt-get -y install nodejs jq
 
 # copy maya source
 COPY . .
