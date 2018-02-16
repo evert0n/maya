@@ -11,7 +11,9 @@ pipeline:
   test:
     image: python:2.7.13
     commands:
-      - python /drone/src/github.com/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/maya-runner.py
+      - pip install --no-cache-dir -r requirements.txt
+      - python maya-runner.py --help
+      #- python /drone/src/github.com/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/maya-runner.py
     environment:
       - ENVIRONMENT=test
 
