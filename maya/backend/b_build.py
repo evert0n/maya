@@ -45,8 +45,6 @@ class ServiceBuilder:
         # Let's copy it instead
         self.make_path(self.build_path + '/node_modules/requestify')
         self.copy_folder('node_modules/requestify')
-        self.make_path(self.build_path + '/node_modules/firebase')
-        self.copy_folder('node_modules/firebase')
 
     def copy_folder(self, folder, optional=False):
         src_path = self.service_path + '/' + folder
