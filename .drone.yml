@@ -17,14 +17,13 @@ pipeline:
     environment:
       - ENVIRONMENT=test
 
-  # build-docker-image:
-  #   image: plugins/docker
-  #   repo: evert0n/sandy
-  #   secrets: [ docker_username, docker_password ]
-  #   dockerfile: Dockerfile.test
-  #   tags:
-  #     - commit-${DRONE_COMMIT_SHA}
-  #     - latest
+  build-docker-image:
+    image: plugins/docker
+    repo: evert0n/maya
+    #secrets: [ docker_username, docker_password ]
+    dockerfile: Dockerfile
+    tags:
+      - latest
 
   # notify-end:
   #   image: plugins/slack
