@@ -15,7 +15,7 @@ pipeline:
       - pip install -U pytest
       - python -m pip install flake8
       - py.test -s maya
-      - flake8 maya
+      #- flake8 maya
       - python maya-runner.py --help
     environment:
       - ENVIRONMENT=test
