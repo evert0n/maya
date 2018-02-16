@@ -8,10 +8,14 @@ pipeline:
     template: >
         Started build #{{build.number}} for *{{repo.name}}*. {{build.link}}
 
-  test:
+  tests:
     image: python:2.7.13
     commands:
       - pip install --no-cache-dir -r requirements.txt
+      - pip install -U pytest
+      - python -m pip install flake8
+      - py.test -s maya
+      - flake8 maya
       - python maya-runner.py --help
     environment:
       - ENVIRONMENT=test
