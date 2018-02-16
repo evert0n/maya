@@ -1,40 +1,39 @@
 pipeline:
 
-  # notify-start:
-  #   image: plugins/slack
-  #   secrets: [slack_webhook]
-  #   webhook: "${SLACK_WEBHOOK}"
-  #   channel: zenbot
-  #   template: >
-  #       Started build #{{build.number}} for *{{repo.name}}*. {{build.link}}
+  notify-start:
+    image: plugins/slack
+    secrets: [slack_webhook]
+    webhook: "${SLACK_WEBHOOK}"
+    channel: zenbot
+    template: >
+        Started build #{{build.number}} for *{{repo.name}}*. {{build.link}}
 
   test:
     image: python:2.7.13
     commands:
       - pip install --no-cache-dir -r requirements.txt
       - python maya-runner.py --help
-      #- python /drone/src/github.com/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/maya-runner.py
     environment:
       - ENVIRONMENT=test
 
   build-docker-image:
     image: plugins/docker
     repo: evert0n/maya
-    #secrets: [ docker_username, docker_password ]
+    secrets: [ docker_username, docker_password ]
     dockerfile: Dockerfile
     tags:
       - latest
 
-  # notify-end:
-  #   image: plugins/slack
-  #   secrets: [slack_webhook]
-  #   webhook: "${SLACK_WEBHOOK}"
-  #   channel: zenbot
-  #   template: >
-  #     {{#success build.status}}
-  #       Build #{{build.number}} for *{{repo.name}}* succeeded. Good job. {{build.link}}
-  #     {{else}}
-  #       Build #{{build.number}} for *{{repo.name}}* failed. Fix me please. {{build.link}}
-  #     {{/success}}
-  #   when:
-  #     status: [ success, failure ]
+  notify-end:
+    image: plugins/slack
+    secrets: [slack_webhook]
+    webhook: "${SLACK_WEBHOOK}"
+    channel: zenbot
+    template: >
+      {{#success build.status}}
+        Build #{{build.number}} for *{{repo.name}}* succeeded. Good job. {{build.link}}
+      {{else}}
+        Build #{{build.number}} for *{{repo.name}}* failed. Fix me please. {{build.link}}
+      {{/success}}
+    when:
+      status: [ success, failure ]
